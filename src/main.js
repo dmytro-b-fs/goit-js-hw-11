@@ -1,4 +1,4 @@
-import * as render from "./js/render-functions.js";
+
 import getImagesByQuery from "./js/pixabay-api.js";
 import { createGallery, showLoader, clearGallery, hideLoader } from "./js/render-functions.js";
 import izitoast from "izitoast";
@@ -14,6 +14,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 searchForm.addEventListener("submit", e => {
     e.preventDefault();
+    clearGallery()
+    showLoader()
     izitoast.destroy();
     const formData = new FormData(searchForm);
 
@@ -27,8 +29,23 @@ searchForm.addEventListener("submit", e => {
       return;
     }
 
-    getImagesByQuery(formData.get("search-text"));
-    
+    getImagesByQuery(formData.get("search-text"))
+    .then(response => {
+        hideLoader()
+        if (response.data.hits.length === 0) {
+            izitoast.error({
+                title: 'Error', 
+                message: 'There are no images for the specified query',}
+            );
+        }
+        else{createGallery(response.data.hits);}  
+      })
+      .catch(error => {
+        hideLoader();
+        izitoast.error({title: 'Error', message: 'Failed to fetch images'});
+        clearGallery();
+      })
+  
 })
 
 

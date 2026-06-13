@@ -15,9 +15,7 @@ const pixabayApiInstance = axios.create({
 
 
 export default function getImagesByQuery(query) {
-    clearGallery();
-    showLoader();
-    pixabayApiInstance.get('', {
+    return pixabayApiInstance.get('', {
         params: {
           q: query,
           image_type: 'photo',
@@ -25,21 +23,4 @@ export default function getImagesByQuery(query) {
           safesearch: true,
         },
       })
-      .then(response => {
-        hideLoader()
-        if (response.data.hits.length === 0) {
-            izitoast.error({
-                title: 'Error', 
-                message: 'There are no images for the specified query',}
-            );
-        }
-        else{createGallery(response.data.hits);}  
-
-      })
-      .catch(error => {
-        hideLoader()
-        izitoast.error({title: 'Error', message: 'Failed to fetch images'});
-        clearGallery();
-      });
-
 }
