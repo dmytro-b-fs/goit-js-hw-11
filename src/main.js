@@ -4,6 +4,7 @@ import { createGallery, showLoader, clearGallery, hideLoader } from "./js/render
 import izitoast from "izitoast";
 import "izitoast/dist/css/iziToast.min.css";
 
+console.log(typeof [1, 2, 3]);
 
 const searchForm = document.querySelector(".form");
 
@@ -33,13 +34,13 @@ searchForm.addEventListener("submit", e => {
     getImagesByQuery(formData.get("search-text"))
     .then(response => {
         hideLoader()
-        if (response.data.hits.length === 0) {
+        if (response.length === 0) {
             izitoast.error({
                 title: 'Error', 
                 message: 'There are no images for the specified query',}
             );
         }
-        else{createGallery(response.data.hits);}  
+        else{createGallery(response);}  
       })
       .catch(error => {
         hideLoader();
