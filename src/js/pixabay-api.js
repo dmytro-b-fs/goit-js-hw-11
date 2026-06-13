@@ -1,5 +1,4 @@
 import axios from "axios";
-import { createGallery, showLoader, clearGallery, hideLoader } from "./render-functions.js";
 import izitoast from "izitoast";
 
 
@@ -23,4 +22,10 @@ export default function getImagesByQuery(query) {
           safesearch: true,
         },
       })
+      .then(response => {
+        return response;
+      })
+      .catch(error => {
+        return error;
+      })   
 }

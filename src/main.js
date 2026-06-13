@@ -14,8 +14,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 searchForm.addEventListener("submit", e => {
     e.preventDefault();
-    clearGallery()
-    showLoader()
     izitoast.destroy();
     const formData = new FormData(searchForm);
 
@@ -28,6 +26,9 @@ searchForm.addEventListener("submit", e => {
       });
       return;
     }
+
+    clearGallery()
+    showLoader()
 
     getImagesByQuery(formData.get("search-text"))
     .then(response => {
