@@ -29,7 +29,7 @@ searchForm.addEventListener("submit", e => {
 
     getImagesByQuery(formData.get("search-text"));
     
-})c
+})
 
 
 
