@@ -33,7 +33,6 @@ searchForm.addEventListener("submit", e => {
 
     getImagesByQuery(formData.get("search-text"))
     .then(response => {
-        hideLoader()
         if (response.length === 0) {
             izitoast.error({
                 title: 'Error', 
@@ -43,9 +42,12 @@ searchForm.addEventListener("submit", e => {
         else{createGallery(response);}  
       })
       .catch(error => {
-        hideLoader();
+        
         izitoast.error({title: 'Error', message: 'Failed to fetch images'});
         clearGallery();
+      })
+      .finally(() => {
+        hideLoader();
       })
   
 })
